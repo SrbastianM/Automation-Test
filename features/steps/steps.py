@@ -4,6 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import json
 
 with open('config.json', 'r') as url:
     config = json.load(url)
@@ -11,14 +12,14 @@ with open('config.json', 'r') as url:
 @given('El usuario ingresó a la plataforma')
 def webDriver(context):
     context.driver = webdriver.Firefox()
-    context.driver.config["url"]
+    context.driver.get(config["url"])
     context.driver.maximize_window()
     context.driver.execute_script("window.scrollTo(0, 800)")
 
 @when('El usuario ingresa sus credenciales')
 def credentials(context):
-    context.driver.find_element(By.ID,"username").send_keys("practice")
-    context.driver.find_element(By.ID,"password").send_keys("SuperSecretPassword!")
+    context.driver.find_element(By.ID,"username").send_keys(config["username"])
+    context.driver.find_element(By.ID,"password").send_keys(config["password"])
     
 @when('El usuario ingresa sus credenciales de manera incorrecta')
 def incorrect_credentials(context):
