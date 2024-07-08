@@ -13,3 +13,5 @@ Small project to improve my automation skills.
   "password": "your_password" -> if you need it 
 }
 ```
+---
+Regrads to see my project! Follow me if you want it
