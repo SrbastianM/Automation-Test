@@ -2,8 +2,8 @@
 ---
 Small project to improve my automation skills.
 ---
-Points of interest:
--. To use the aplication you need to set your own url and adjustments about a page you want to use. Using config.json file like this:
+## Points of interest:
+-. To use the application you need to set your own url and settings for the page you want to use. Using a config.json file like this:
 ```json
 {
   "url": "www.your_url.com",
