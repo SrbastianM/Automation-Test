@@ -8,14 +8,14 @@ Small project to improve my automation skills using selenium and behave
 - To use the robot you need to set your own url and settings for the page you want to use. Using a config.json file like this:
 ```json
 {
-    "url": "https://automationcompany-qa.jujutests.com/",
+    "url": "your url",
     "correctUser": {
-        "username": "usertecvac1",
-        "password": "UserTest1*"
+        "username": "yourName",
+        "password": "yourPassword*"
     },
     "incorrectUser": {
-        "username": "usertecvac2",
-        "password": "UserTest2*"
+        "username": "incorrectUsername",
+        "password": "incorrectPassword*"
     }
 }
 ```
