@@ -3,7 +3,8 @@
 Small project to improve my automation skills.
 ---
 ## Points of interest:
--. To use the application you need to set your own url and settings for the page you want to use. Using a config.json file like this:
+- To start the robot, you need to use the following command: ```bahave``` in your terminal.
+- To use the robot you need to set your own url and settings for the page you want to use. Using a config.json file like this:
 ```json
 {
   "url": "www.your_url.com",
