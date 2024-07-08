@@ -20,4 +20,4 @@ Small project to improve my automation skills using selenium and behave
 }
 ```
 ---
-Regrads to see my project! Follow me if you want it
+Thanks for watching my project! Follow me if you want
