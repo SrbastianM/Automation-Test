@@ -19,5 +19,6 @@ Small project to improve my automation skills using selenium and behave
     }
 }
 ```
+- The unit test checks the json files shown above. To use it you need to use the following command ```py -m unittest .\unit\test_main.py``` or ```py -m unittest .\unit\test_main.py -v```
 ---
 Thanks for watching my project! Follow me if you want
