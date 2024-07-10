@@ -6,6 +6,8 @@ from selenium.webdriver.support import expected_conditions as EC
 import time
 import json
 
+from funciones.global_functions import time_sleep
+
 with open('config.json', 'r') as url:
     config = json.load(url)
 
@@ -14,7 +16,7 @@ def webDriver(context):
     context.driver = webdriver.Firefox()
     context.driver.get(config["url"])
     context.driver.maximize_window()
-    time.sleep(10)
+    time_sleep(5)
      
     try:
         cookieAlert = context.driver.find_element(By.XPATH, "//button[contains(text(),'Aceptar')]")
@@ -47,14 +49,14 @@ def incorrect_credentials(context):
     
 @when('El usuario hace clic en el botón ingresar')
 def click_login_button(context):
-    time.sleep(2)
+    time_sleep(2)
     btnLogin = context.driver.find_element(By.XPATH, "//button[contains(text(),'Entrar')]")
     if btnLogin.is_displayed() and btnLogin.is_enabled():
         btnLogin.click()
     
 @then('El usuario visualiza el mensaje de credenciales incorrectas')
 def login_fail(context):
-    time.sleep(2)
+    time_sleep(2)
     context.driver.find_element(By.XPATH, "//p[@class='first-body'][contains(.,'Usuario o contraseña incorrectos.')]")
     assert " Usuario o contraseña incorrectos. " in context.driver.page_source
     context.driver.find_element(By.XPATH, "//button[@class='btn'][contains(.,'Regresar')]").click()
@@ -67,11 +69,11 @@ def login_success(context):
 @then('El usuario visualiza el mensaje de bienvenida')
 def show_welcome_message(context):
     context.driver.find_element(By.XPATH, "//p[@class='name-menu'][contains(.,'Hola, User')]")
-    time.sleep(2)
+    time_sleep(2)
     
 
 @then('El usuario cierra sesión')
 def user_logout(context):
     context.driver.find_element(By.XPATH,"//img[contains(@class,'icon-close-s')]").click()
-    time.sleep(2)
+    time_sleep(2)
     context.driver.quit()
