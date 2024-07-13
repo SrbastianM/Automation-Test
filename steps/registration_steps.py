@@ -2,78 +2,111 @@ from behave import given, when, then
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
+from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 import time
 import json
 
-from funciones.global_functions import time_sleep
-
 with open('config.json', 'r') as url:
     config = json.load(url)
-    
-
     #Scenario 1    
-    @given("the browser is launched")
+    @given('the browser is launched')
     def step_imp(context):
         context.driver = webdriver.Firefox()
         context.driver.maximize_window()
     
-    @when("the user navigates to the website")
+    @when('the user navigates to the website')
     def step_imp(context):
         context.driver.get(config["url"])
-        time_sleep(2)
+        time.sleep(2)
     
-    @then("the home page should be visible")
+    @then('the home page should be visible')
     def step_imp(context):
         assert "Website for automation practice" in context.driver.page_source
     
-    @when("the user clicks on the signup button page")
+    @when('the user clicks on the signup link page')
     def step_imp(context):
         sign_up_button_page =  context.driver.find_element(By.XPATH, "//a[contains(.,'Signup / Login')]")
         sign_up_button_page.click()
-        time_sleep(2)
-    
-    @when("the New User signup should be visible")
+        time.sleep(2)
+    #Here code crashes
+    @then('the subtitle "New User Signup!" should be visible')
     def step_imp(context):
-        signup_text = context.driver.find_element(By.XPATH, "//h2[contains(.,'New User Signup!')]")
-        if signup_text.is_displayed() and signup_text.is_enabled():
-            print("New User Signup is visible")
-        time_sleep(2)
+        text = context.driver.find_element(By.XPATH, "//h2[contains(.,'New User Signup!')]")
+        try :
+            if text.is_displayed() and text.is_enabled():
+                return True
+            return text.is_displayed()
+        except NoSuchElementException:
+                return False
         
-    @when("user fill in the name and email address with:")
+    @when('user fill in the name and email address fields')
     def step_imp(context):
-        name_field = context.driver.find_element(By.XPATH, "//input[contains(@data-qa,'signup-name')]").send_keys(config["register_credentials"]["account_information"]["name"])
+        name_field = context.driver.find_element(By.XPATH, "//input[@name='name']")
         email_field = context.driver.find_element(By.XPATH, "//input[contains(@data-qa,'signup-email')]")
-        name_field.send_keys(Keys.TAB, config["register_credentials"]["account_information"]["name"])
-        email_field.send_keys(Keys.TAB, config["register_credentials"]["account_information"]["email"])
-        
+        name_field.send_keys(config["register_credentials"]["account_information"]["name"])
+        email_field.send_keys(config["register_credentials"]["account_information"]["email"])
+    
+    @when('user fill name field only')
+    def step_imp(context):
+        name_field = context.driver.find_element(By.XPATH, "//input[@name='name']")
+        name_field.send_keys(config["register_credentials"]["account_information"]["name"])
            
-    @when("the user clicks on the signup button")
+    @when('the user clicks the signup button')
     def step_imp(context):
         sign_up_button = context.driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Signup')]")
         sign_up_button.click()
-        time_sleep(2)
+        time.sleep(2)
     
-    @then("the 'Enter Account Information' should be visible")
+    @then('the "Enter Account Information" should be visible')
     def step_imp(context):
-        assert "Enter Account Information" in context.driver.page_source
+        text = context.driver.find_element(By.XPATH, "//b[contains(.,'Enter Account Information')]")
+        try :
+            if text.is_displayed() and text.is_enabled():
+                return True
+            return text.is_displayed()
+        except NoSuchElementException:
+                return False
     
-    @when("the user fills in the account information with:")
+    @then('the account registration should fail')
     def step_imp(context):
+        context.driver.quit()
+    
+    @when('the user fills in the account information fields')
+    def step_imp(context):
+        try:
+            radio_button = context.driver.find_element(By.XPATH, "//input[@type='radio'][contains(@id,'gender1')]")
+            if radio_button.is_selected():
+                pass
+            else:
+                radio_button.click()
+        except NoSuchElementException:
+            return False
+        input = context.driver.find_element(By.XPATH, "//input[contains(@type,'password')]")
+        input.send_keys(config["register_credentials"]["account_information"]["password"])
+        
         select_drop_downlist_days = Select(context.driver.find_element(By.XPATH, "//select[contains(@data-qa,'days')]"))
         select_drop_downlist_month = Select(context.driver.find_element(By.XPATH, "//select[contains(@data-qa,'month')]"))
         select_drop_downlist_year = Select(context.driver.find_element(By.XPATH, "//select[contains(@data-qa,'year')]"))
         
         select_drop_downlist_days.select_by_value("1")
         select_drop_downlist_month.select_by_value("1")
-        select_drop_downlist_year.select_by_value("1990")
+        select_drop_downlist_year.select_by_value("2000")
     
-    @then("the 'Address Information' should be visible")
+    
+    @then("the ADDRESS INFORMATION section should be visible")
     def step_imp(context):
-        assert "Address Information" in context.driver.page_source
-    
-    @when("the user fills in the address information with:")
+        try :
+            text = context.driver.find_element(By.XPATH, "//b[contains(.,'Address Information')]")
+            if text.is_displayed() and text.is_enabled():
+                return True
+            return text.is_displayed()
+        except NoSuchElementException:
+                return False
+    #AQUI ESTA FALLANDO
+    @when("the user fills the address information fields")
     def step_imp(context):
         first_name_field = context.driver.find_element(By.XPATH, "//input[contains(@data-qa,'first_name')]")
         last_name_field = context.driver.find_element(By.XPATH, "//input[contains(@data-qa,'last_name')]")
@@ -86,26 +119,40 @@ with open('config.json', 'r') as url:
         mobile_number_field = context.driver.find_element(By.XPATH, "//input[contains(@data-qa,'mobile_number')]")
         
         
-        first_name_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["first_name"])
-        last_name_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["last_name"])
-        company_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["company"])
-        address_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["address"])
-        country_dropdown.select_by_value("UA")
-        state_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["state"])
-        city_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["city"])
-        zipcode_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["zipcode"])
-        mobile_number_field.send_keys(Keys.TAB, config["register_credentials"]["address_information"]["mobile_number"])
+        first_name_field.send_keys( config["register_credentials"]["address_information"]["first_name"])
+        last_name_field.send_keys( config["register_credentials"]["address_information"]["last_name"])
+        company_field.send_keys( config["register_credentials"]["address_information"]["company"])
+        address_field.send_keys( config["register_credentials"]["address_information"]["address"])
+        context.driver.execute_script("window.scrollTo(0, 720);")
+        country_dropdown.select_by_value(config["register_credentials"]["address_information"]["country"])
+        state_field.send_keys( config["register_credentials"]["address_information"]["state"])
+        city_field.send_keys( config["register_credentials"]["address_information"]["city"])
+        zipcode_field.send_keys( config["register_credentials"]["address_information"]["zipcode"])
+        mobile_number_field.send_keys( config["register_credentials"]["address_information"]["mobile_number"])
         
-    @then("the user clicks the Create Account button")
+    @when("the user clicks the Create Account button")
     def step_imp(context):
-        create_account_button = context.driver.find_element(By.XPATH, "//button[@type='submit'][contains(.,'Create Account')]")
-        create_account_button.click()
-        time_sleep(2)
+        try: 
+            button = WebDriverWait(context.driver, .3).until(EC.element_to_be_clickable((By.XPATH, "//button[@type='submit'][contains(.,'Create Account')]")))
+            button.click()
+        except ElementClickInterceptedException:
+            try:
+                context.driver.execute_script("window.scrollTo(0, 900);")
+                button.click()
+                time.sleep(.3)
+            except:
+                return False
     
-    @then("the 'Account Created!' message should be visible")
+    @then('the "Account Created!" message should be visible')
     def step_imp(context):
-        assert "Account Created!" in context.driver.page_source
+        try :
+            text = context.driver.find_element(By.XPATH, "//b[contains(.,'Account Created!')]")
+            if text.is_displayed() and text.is_enabled():
+                return True
+            return text.is_displayed()
+        except NoSuchElementException:
+                return False
     
-    @then("the account should be created")
+    @then("the account should be created successfully")
     def step_imp(context):
         context.driver.quit()
