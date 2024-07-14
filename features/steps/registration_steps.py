@@ -11,27 +11,7 @@ import json
 
 with open('config.json', 'r') as url:
     config = json.load(url)
-    #Scenario 1    
-    @given('the browser is launched')
-    def step_imp(context):
-        context.driver = webdriver.Firefox()
-        context.driver.maximize_window()
     
-    @when('the user navigates to the website')
-    def step_imp(context):
-        context.driver.get(config["url"])
-        time.sleep(2)
-    
-    @then('the home page should be visible')
-    def step_imp(context):
-        assert "Website for automation practice" in context.driver.page_source
-    
-    @when('the user clicks on the signup link page')
-    def step_imp(context):
-        sign_up_button_page =  context.driver.find_element(By.XPATH, "//a[contains(.,'Signup / Login')]")
-        sign_up_button_page.click()
-        time.sleep(2)
-    #Here code crashes
     @then('the subtitle "New User Signup!" should be visible')
     def step_imp(context):
         text = context.driver.find_element(By.XPATH, "//h2[contains(.,'New User Signup!')]")

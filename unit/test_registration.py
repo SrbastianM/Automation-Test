@@ -1,4 +1,4 @@
-from funciones.global_functions import GlobalFunctions
+from functions.global_functions import GlobalFunctions
 import unittest
 import json
 import time

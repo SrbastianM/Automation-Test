@@ -97,5 +97,14 @@ class GlobalFunctions():
         except NoSuchElementException:
                 return False
     
+    def alert_is_visible_by_xpath(self, t, xpath):
+        try :
+            alert = WebDriverWait(self.driver, t).until(EC.visibility_of_element_located(By.XPATH, xpath))
+            if alert.is_displayed() and alert.is_enabled():
+                return True
+            return alert.is_displayed()
+        except NoSuchElementException:
+                return False
+            
     def scroll_down_page(self):
         self.driver.execute_script("window.scrollTo(0, 720);")

@@ -2,11 +2,11 @@
     "url": "https://www.automationexercise.com/",
     "login_credentials": {
         "correct_user": {
-            "username": "usertecvac1",
-            "password": "UserTest1*"
+            "email": "jhon@example.com",
+            "password": "Cutepassword1*"
         },
         "incorrect_user": {
-            "username": "usertecvac2",
+            "email": "usertecvac2",
             "password": "UserTest2*"
         }
     },
