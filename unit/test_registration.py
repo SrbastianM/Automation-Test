@@ -98,6 +98,7 @@ class TestRegistration(unittest.TestCase):
         driver.select_input_field_by_xpath("//input[contains(@data-qa,'zipcode')]", .3, config["register_credentials"]["address_information"]["zipcode"])
         driver.select_input_field_by_xpath("//input[contains(@data-qa,'mobile_number')]", .3, config["register_credentials"]["address_information"]["mobile_number"])
         driver.select_and_click_button_by_xpath("//button[@type='submit'][contains(.,'Create Account')]", .3)
+        driver.select_and_click_button_by_xpath("//a[contains(@data-qa,'continue-button')]", .3)
         driver.select_and_click_button_by_xpath("//a[contains(.,'Delete Account')]", .3)
         time.sleep(3)
 
