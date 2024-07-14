@@ -1,0 +1,32 @@
+{
+    "url": "https://www.automationexercise.com/",
+    "login_credentials": {
+        "correct_user": {
+            "username": "usertecvac1",
+            "password": "UserTest1*"
+        },
+        "incorrect_user": {
+            "username": "usertecvac2",
+            "password": "UserTest2*"
+        }
+    },
+    "register_credentials": {
+        "account_information": {
+            "name": "John",
+            "email": "jhon@example.com",
+            "password": "Cutepassword1*",
+            "date_of_birth": "1/1/2000"
+        },
+        "address_information": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "company": "Example Inc",
+            "address": "123 Main 5t",
+            "country": "United States",
+            "state": "CA",
+            "city": "Los Angeles",
+            "zipcode": "90001",
+            "mobile_number": "123789"
+        }
+    }
+}
