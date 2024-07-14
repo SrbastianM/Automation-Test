@@ -105,7 +105,7 @@ with open('config.json', 'r') as url:
             return text.is_displayed()
         except NoSuchElementException:
                 return False
-    #AQUI ESTA FALLANDO
+    
     @when("the user fills the address information fields")
     def step_imp(context):
         first_name_field = context.driver.find_element(By.XPATH, "//input[contains(@data-qa,'first_name')]")
